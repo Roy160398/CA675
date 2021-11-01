@@ -1,0 +1,20 @@
+//Hive code
+
+//Creating databases
+CREATE DATABASE roys_table;
+
+//creating the table
+CREATE EXTERNAL TABLE table1 (Id INT, Score INT, ViewCount INT, Body String, OwnerUserId INT, Title String, T
+ags String) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LOCATION '/roy_456';
+
+//data is been loaded into the table
+LOAD DATA INPATH '/roy_456/royston/' INTO TABLE table1;
+
+//1- top 10 post by score
+SELECT id, score, title  FROM table1 ORDER BY Score DESC Limit 10;
+
+//2- top 10 users by post score 
+SELECT owneruserid, SUM(score) AS F_score FROM table1 GROUP BY owneruserid ORDER BY F_score DESC LIMIT 10;
+
+//3-  number of distinct users, who used the word “cloud” in one of their posts
+SELECT COUNT(DISTINCT owneruserid) AS unique_Count from table1 WHERE (LOWER(Body) like '%cloud%' OR LOWER(Title) like '%cloud%' or LOWER(Tags) like '%cloud%');
