@@ -1,0 +1,27 @@
+gettin 200000 posts
+
+select top 50000* posts where posts.viewcount>5000 and post.viewcount<20000
+order post by view.count
+
+select top 50000* posts where posts.viewcount>20000 and post.viewcount<50000
+order post by view.count
+
+select top 50000* posts where posts.viewcount>50000 and post.viewcount<100000
+order post by view.count
+
+select top 50000* posts where posts.viewcount>10000 and post.viewcount<250000
+order post by view.count
+
+
+
+
+
+
+
+
+
+
+
+
+
+
