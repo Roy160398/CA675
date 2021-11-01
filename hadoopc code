@@ -1,0 +1,11 @@
+//Directory for storing the data in hdfs
+hadoop fs -mkdir /user/roy_456
+
+//Putting the data from GCP bucket to hdfs
+hadoop distcp  gs://dataproc-staging-us-central1-89305542964-tg5ubbup
+
+//Checking if data has been uploaded
+hadoop fs -ls /user/roy_456
+
+//Making directory for pig storage
+hadoop fs -mkdir /roy_123
