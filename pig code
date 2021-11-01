@@ -1,0 +1,21 @@
+pig
+
+combining the files
+Final.csv = union QueryResult1.csv,QueryResult2.csv,QueryResult3.csv,QueryResult4.csv;
+
+// loading the file using piggybank 
+royton = LOAD 'Final.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',', 'YES_MULTILINE','NOCHANGE','SKIP_INPUT_HEADER') AS (Id:int, AcceptedAnswerId:int, Score:int, ViewCount:int, Body:chararray, OwnerUserId:int, LastEditorUserId:int, Title:chararray, Tags:chararray);
+
+// Removing  '\n', '\t' and '\r' characters from the body column,  removing comma character which acts as delimitor
+royston1 = FOREACH royton GENERATE Id,Score,ViewCount,OwnerUserId,Title,Tags, REPLACE(Body,'\\n', '') AS Body;
+
+royston2 = FOREACH royston1 GENERATE Id,Score,ViewCount,OwnerUserId,Title,Tags, REPLACE(Body,',*', '') AS Body;
+
+royston3 = FOREACH royston2 GENERATE Id,Score,ViewCount,OwnerUserId,Title,Tags, REPLACE(Body,'\\r', '') AS Body;
+
+royston4 = FOREACH royston3 GENERATE Id,Score,ViewCount,Body,OwnerUserId,Tags, REPLACE(Title,',*', '') AS Title;
+
+royston5 = FOREACH royston4 GENERATE Id,Score,ViewCount,OwnerUserId,Title,Tags, REPLACE(Body,'\\t', '') AS Body;
+
+//data to be stored into royston
+STORE royston5 INTO '/roy_456/royston' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',');
